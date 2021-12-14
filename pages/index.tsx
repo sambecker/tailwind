@@ -1,10 +1,19 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useState } from 'react'
+import { LoremIpsum } from "lorem-ipsum";
 import { joinClasses } from '../utility/css'
 import Button from '../components/Button';
 
-const INITIAL_ITEMS = ['One', 'Two', 'Three'];
+const INITIAL_ITEMS = [
+  'One',
+  'Two',
+  'Three',
+  'Four',
+].map(item => ({
+  title: item,
+  text: new LoremIpsum().generateWords(30),
+}));
 
 const TITLE = 'Responsive Tailwind demo';
 
@@ -25,18 +34,28 @@ const Home: NextPage = () => {
         </h1>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          {items.map(item =>
+          {items.map(({ title, text }) =>
             <div
-              key={item}
+              key={title}
               className={joinClasses([
-                'text-white bg-teal-500 px-4 pt-2 pb-4 rounded-lg shadow-lg shadow-teal-500/50',
+                'flex flex-col items-start',
+                'px-4 pt-2 pb-4',
+                'text-white bg-teal-500  rounded-lg',
+                'shadow-lg shadow-teal-500/50',
               ])}
             >
-              <div className="mb-3">{item}</div>
+              <div className="mb-8 grow">
+                <h3 className="text-2xl font-bold mb-1">
+                  {title}
+                </h3>
+                <p className="text-teal-200 leading-6">
+                  {text}
+                </p>
+              </div>
               <Button
-                onClick={() => setItems(items.filter(i => i !== item))}
+                onClick={() => setItems(items.filter(i => i.title !== title))}
               >
-                More info
+                Close
               </Button>
             </div>)}
         </div>
@@ -45,7 +64,7 @@ const Home: NextPage = () => {
             onClick={() => setItems(INITIAL_ITEMS)}
             isDark
           >
-            Restore
+            Restore boxes
           </Button>}
       </main>
     </>
