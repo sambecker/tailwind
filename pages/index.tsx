@@ -53,7 +53,9 @@ const Home: NextPage = () => {
                 </p>
               </div>
               <Button
-                onClick={() => setItems(items.filter(i => i.title !== title))}
+                className="-ml-0.5"
+                onClick={() =>
+                  setItems(items.filter(i => i.title !== title))}
               >
                 Close
               </Button>
@@ -62,7 +64,8 @@ const Home: NextPage = () => {
         {items.length === 0 &&
           <Button
             onClick={() => setItems(INITIAL_ITEMS)}
-            isDark
+            dark
+            large
           >
             Restore boxes
           </Button>}
