@@ -33,7 +33,7 @@ const Home: NextPage = () => {
           {TITLE}
         </h1>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-4">
           {items.map(({ title, text }) =>
             <div
               key={title}
