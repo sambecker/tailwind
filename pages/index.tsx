@@ -1,9 +1,11 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import { useState } from 'react'
-import { LoremIpsum } from "lorem-ipsum";
-import { joinClasses } from '../utility/css'
+import type { NextPage } from 'next';
+import { useState } from 'react';
+import Head from 'next/head';
+import { AnimatePresence, motion } from 'framer-motion';
+import { LoremIpsum } from 'lorem-ipsum';
+import { joinClasses } from '../utility/css';
 import Button from '../components/Button';
+import Box from '../components/Box';
 
 const INITIAL_ITEMS = [
   'One',
@@ -29,37 +31,38 @@ const Home: NextPage = () => {
       </Head>
 
       <main className="space-y-3">
-        <h1 className="text-3xl md:text-6xl mb-8 md:mb-24 font-bold">
+        <h1
+          className={joinClasses([
+            'text-3xl leading-none md:text-6xl mb-8 md:mb-24 font-bold',
+          ])}
+        >
           {TITLE}
         </h1>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-4">
-          {items.map(({ title, text }) =>
-            <div
-              key={title}
-              className={joinClasses([
-                'flex flex-col items-start',
-                'px-4 pt-2 pb-4',
-                'text-white bg-teal-500  rounded-lg',
-                'shadow-lg shadow-teal-500/50',
-              ])}
-            >
-              <div className="mb-8 grow">
-                <h3 className="text-2xl font-bold mb-1">
-                  {title}
-                </h3>
-                <p className="text-teal-200 leading-6">
-                  {text}
-                </p>
-              </div>
-              <Button
-                className="-ml-0.5"
-                onClick={() =>
-                  setItems(items.filter(i => i.title !== title))}
+        <div className={joinClasses([
+          'grid',
+          'grid-cols-1 md:grid-cols-3 xl:grid-cols-4',
+          'gap-6 md:gap-4',
+        ])}>
+          <AnimatePresence>
+            {items.map(({ title, text }) =>
+              <motion.div
+                key={title}
+                className="flex"
+                initial={{ scale: 1, opacity: 1, filter: 'blur(0)' }}
+                exit={{ scale: 1.2, opacity: 0, filter: 'blur(20px)' }}
+                transition={{ duration: 0.5 }}
               >
-                Close
-              </Button>
-            </div>)}
+                <Box
+                  title={title}
+                  cta="Close"
+                  onCtaClick={() =>
+                    setItems(items.filter(i => i.title !== title))}
+                >
+                  {text}
+                </Box>
+              </motion.div>)}
+          </AnimatePresence>
         </div>
         {items.length === 0 &&
           <Button
@@ -71,7 +74,7 @@ const Home: NextPage = () => {
           </Button>}
       </main>
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
