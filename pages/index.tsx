@@ -19,7 +19,10 @@ const INITIAL_ITEMS = [
 
 const TITLE = 'Responsive Tailwind demo';
 
+export type TailwindColor = 'teal' | 'indigo';
+
 const Home: NextPage = () => {
+  const [color] = useState<TailwindColor>('indigo');
   const [items, setItems] = useState(INITIAL_ITEMS);
 
   return (
@@ -38,6 +41,15 @@ const Home: NextPage = () => {
         >
           {TITLE}
         </h1>
+        
+        {items.length === 0 &&
+          <Button
+            onClick={() => setItems(INITIAL_ITEMS)}
+            dark
+            large
+          >
+            Restore boxes
+          </Button>}
 
         <div className={joinClasses([
           'grid',
@@ -58,20 +70,13 @@ const Home: NextPage = () => {
                   cta="Close"
                   onCtaClick={() =>
                     setItems(items.filter(i => i.title !== title))}
+                  color={color}
                 >
                   {text}
                 </Box>
               </motion.div>)}
           </AnimatePresence>
         </div>
-        {items.length === 0 &&
-          <Button
-            onClick={() => setItems(INITIAL_ITEMS)}
-            dark
-            large
-          >
-            Restore boxes
-          </Button>}
       </main>
     </>
   );
