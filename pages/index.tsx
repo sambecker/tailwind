@@ -2,28 +2,29 @@ import type { NextPage } from 'next';
 import { useState } from 'react';
 import Head from 'next/head';
 import { AnimatePresence, motion } from 'framer-motion';
-import { LoremIpsum } from 'lorem-ipsum';
 import { joinClasses } from '../utility/css';
 import Button from '../components/Button';
 import Box from '../components/Box';
-
-const INITIAL_ITEMS = [
-  'One',
-  'Two',
-  'Three',
-  'Four',
-].map(item => ({
-  title: item,
-  text: new LoremIpsum().generateWords(30),
-}));
+import { useAppState } from '../state';
+import { generateItems, Items } from '../app';
 
 const TITLE = 'Responsive Tailwind demo';
 
-export type TailwindColor = 'teal' | 'indigo';
+interface Props {
+  initialItems: Items
+}
 
-const Home: NextPage = () => {
-  const [color] = useState<TailwindColor>('indigo');
-  const [items, setItems] = useState(INITIAL_ITEMS);
+const Home: NextPage<Props> = ({ initialItems }) => {
+  const [items, setItems] = useState(initialItems);
+
+  const { color } = useAppState('theme');
+
+  const textColor = () => {
+    switch (color) {
+    case 'teal': return 'text-teal-900';
+    case 'indigo': return 'text-indigo-900';
+    }
+  };
 
   return (
     <>
@@ -37,6 +38,7 @@ const Home: NextPage = () => {
         <h1
           className={joinClasses([
             'text-3xl leading-none md:text-6xl mb-8 md:mb-24 font-bold',
+            textColor(),
           ])}
         >
           {TITLE}
@@ -44,7 +46,8 @@ const Home: NextPage = () => {
         
         {items.length === 0 &&
           <Button
-            onClick={() => setItems(INITIAL_ITEMS)}
+            onClick={() => setItems(generateItems())}
+            color={color}
             dark
             large
           >
@@ -63,7 +66,7 @@ const Home: NextPage = () => {
                 className="flex"
                 initial={{ scale: 1, opacity: 1, filter: 'blur(0)' }}
                 exit={{ scale: 1.2, opacity: 0, filter: 'blur(20px)' }}
-                transition={{ duration: 0.5 }}
+                transition={{ duration: 0.25 }}
               >
                 <Box
                   title={title}
@@ -81,5 +84,9 @@ const Home: NextPage = () => {
     </>
   );
 };
+
+Home.getInitialProps = (): Props => ({
+  initialItems: generateItems(),
+});
 
 export default Home;

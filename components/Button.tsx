@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { TailwindColor } from '../pages';
+import { TailwindColor } from '../state/theme';
 import { joinClasses } from '../utility/css';
 
 interface Props {

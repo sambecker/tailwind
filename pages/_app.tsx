@@ -1,8 +1,18 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
+import { Provider } from 'react-redux';
+import { createStore } from '@reduxjs/toolkit';
+import App from '../app/App';
+import reducer from '../state';
+
+const store = createStore(reducer);
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+  return <Provider store={store}>
+    <App>
+      <Component {...pageProps} />
+    </App>
+  </Provider>;
 }
 
 export default MyApp;
