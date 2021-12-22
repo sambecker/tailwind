@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { joinClasses } from '../utility/css';
-import Button from '../components/Button';
+import Button from './Button';
 import { TailwindColor } from '../state/theme';
 
 interface Props {

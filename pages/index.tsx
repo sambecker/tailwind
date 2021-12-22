@@ -2,11 +2,11 @@ import type { NextPage } from 'next';
 import { useState } from 'react';
 import Head from 'next/head';
 import { AnimatePresence, motion } from 'framer-motion';
-import { joinClasses } from '../utility/css';
-import Button from '../components/Button';
-import Box from '../components/Box';
-import { useAppState } from '../state';
-import { generateItems, Items } from '../app';
+import { joinClasses } from '../src/utility/css';
+import Button from '../src/components/Button';
+import Box from '../src/components/Box';
+import { useAppState } from '../src/state';
+import { generateItems, Items } from '../src/app';
 
 const TITLE = 'Responsive Tailwind demo';
 
