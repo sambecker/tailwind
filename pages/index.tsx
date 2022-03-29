@@ -7,6 +7,8 @@ import Button from '../src/components/Button';
 import Box from '../src/components/Box';
 import { useAppState } from '../src/state';
 import { generateItems, Items } from '../src/app';
+import ThemeChooser from '../src/theme/ThemeChooser';
+import { getDarkTextColor } from '../src/theme';
 
 const TITLE = 'Responsive Tailwind demo';
 
@@ -17,14 +19,7 @@ interface Props {
 const Home: NextPage<Props> = ({ initialItems }) => {
   const [items, setItems] = useState(initialItems);
 
-  const { color } = useAppState('theme');
-
-  const textColor = () => {
-    switch (color) {
-    case 'teal': return 'text-teal-900';
-    case 'indigo': return 'text-indigo-900';
-    }
-  };
+  const { selectedColor } = useAppState('theme');
 
   return (
     <>
@@ -34,11 +29,11 @@ const Home: NextPage<Props> = ({ initialItems }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="space-y-3">
+      <main className="space-y-3 mb-12">
         <h1
           className={joinClasses([
             'text-3xl leading-none md:text-6xl mb-8 md:mb-24 font-bold',
-            textColor(),
+            getDarkTextColor(selectedColor),
           ])}
         >
           {TITLE}
@@ -47,7 +42,8 @@ const Home: NextPage<Props> = ({ initialItems }) => {
         {items.length === 0 &&
           <Button
             onClick={() => setItems(generateItems())}
-            color={color}
+            className="relative -top-3"
+            color={selectedColor}
             dark
             large
           >
@@ -73,7 +69,7 @@ const Home: NextPage<Props> = ({ initialItems }) => {
                   cta="Close"
                   onCtaClick={() =>
                     setItems(items.filter(i => i.title !== title))}
-                  color={color}
+                  color={selectedColor}
                 >
                   {text}
                 </Box>
@@ -81,6 +77,10 @@ const Home: NextPage<Props> = ({ initialItems }) => {
           </AnimatePresence>
         </div>
       </main>
+
+      <footer>
+        <ThemeChooser />
+      </footer>
     </>
   );
 };

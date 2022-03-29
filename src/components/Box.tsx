@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { joinClasses } from '../utility/css';
 import Button from './Button';
-import { TailwindColor } from '../state/theme';
+import { TailwindColor } from '../theme';
 
 interface Props {
   title: string
@@ -23,6 +23,10 @@ const Box: FC<Props> = ({
       return 'bg-teal-500 shadow-teal-500/50';
     case 'indigo':
       return 'bg-indigo-500 shadow-indigo-500/50';
+    case 'orange':
+      return 'bg-orange-500 shadow-orange-500/50';
+    case 'grey':
+      return 'bg-slate-500 shadow-slate-500/50';
     }
   };
 
@@ -32,6 +36,10 @@ const Box: FC<Props> = ({
       return 'text-teal-200';
     case 'indigo':
       return 'text-indigo-200';
+    case 'orange':
+      return 'text-orange-200';
+    case 'grey':
+      return 'text-slate-200';
     }
   };
 

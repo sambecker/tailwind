@@ -1,13 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-export type TailwindColor = 'teal' | 'indigo';
+import { TailwindColor } from '.';
 
 export interface ThemeState {
-  color: TailwindColor
+  selectedColor: TailwindColor
 }
 
 const initialState: ThemeState = {
-  color: 'teal',
+  selectedColor: 'teal',
 };
 
 const { actions, reducer } = createSlice({
@@ -15,7 +14,7 @@ const { actions, reducer } = createSlice({
   initialState,
   reducers: {
     setColor(state, action: PayloadAction<TailwindColor>) {
-      state.color = action.payload;
+      state.selectedColor = action.payload;
     },
   },
 });

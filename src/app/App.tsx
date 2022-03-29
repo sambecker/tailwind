@@ -3,17 +3,19 @@ import { useAppState } from '../state';
 import { joinClasses } from '../utility/css';
 import useElementClasses from '../utility/useBodyClasses';
 
-interface Props {}
-
-const App: FC<Props> = ({ children }) => {
-  const { color } = useAppState('theme');
+const App: FC = ({ children }) => {
+  const { selectedColor } = useAppState('theme');
 
   const backgroundForColor = () => {
-    switch (color) {
+    switch (selectedColor) {
+    case 'grey':
+      return 'bg-slate-50';
     case 'teal':
       return 'bg-teal-50';
     case 'indigo':
       return 'bg-indigo-50';
+    case 'orange':
+      return 'bg-orange-50';
     }
   };
 

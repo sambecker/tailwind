@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { useSelector } from 'react-redux';
-import theme, { ThemeState } from './theme';
+import theme, { ThemeState } from '../theme/state';
 
 export interface AppState {
   theme: ThemeState

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { TailwindColor } from '../state/theme';
+import { TailwindColor } from '../theme';
 import { joinClasses } from '../utility/css';
 
 interface Props {
@@ -20,6 +20,13 @@ const ComponentName: FC<Props>= ({
 }) => {
   const classesForColor = () => {
     switch (color) {
+    case 'grey':
+      return joinClasses([
+        'text-slate-500 active:bg-slate-100 active:text-slate-600',
+        dark
+          ? 'border-slate-500 active:shadow-slate-500/25'
+          : 'border-white active:border-slate-100 active:shadow-slate-800/25',
+      ]);
     case 'teal':
       return joinClasses([
         'text-teal-500 active:bg-teal-100 active:text-teal-600',
@@ -33,6 +40,13 @@ const ComponentName: FC<Props>= ({
         dark
           ? 'border-indigo-500 active:shadow-indigo-500/25'
           : 'border-white active:border-indigo-100 active:shadow-indigo-800/25',
+      ]);
+    case 'orange':
+      return joinClasses([
+        'text-orange-500 active:bg-orange-200 active:text-orange-600',
+        dark
+          ? 'border-orange-500 active:shadow-orange-500/25'
+          : 'border-white active:border-orange-100 active:shadow-orange-800/25',
       ]);
     }
   };
