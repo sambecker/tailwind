@@ -1,13 +1,11 @@
 import { FC } from 'react';
 import { useDispatch } from 'react-redux';
-import { TAILWIND_COLORS } from '.';
+import { storeColorLocally, TAILWIND_COLORS } from '.';
 import { useAppState } from '../state';
 import { joinClasses } from '../utility/css';
 import { themeActions } from './state';
 
-interface Props {}
-
-const ThemeChooser: FC<Props> = () => {
+const ThemeChooser: FC = () => {
   const { selectedColor } = useAppState('theme');
 
   const dispatch = useDispatch();
@@ -22,7 +20,10 @@ const ThemeChooser: FC<Props> = () => {
             'active:font-bold',
             color === selectedColor && 'font-bold',
           ])}
-          onClick={() => dispatch(themeActions.setColor(color))}
+          onClick={() => {
+            dispatch(themeActions.setColor(color));
+            storeColorLocally(color);
+          }}
         >
           {color}
         </button>)}

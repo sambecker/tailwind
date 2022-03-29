@@ -1,4 +1,10 @@
-export type TailwindColor = 'grey' | 'teal' | 'indigo' | 'orange';
+import { getCookie, setCookie } from 'typescript-cookie';
+
+export type TailwindColor =
+  'grey' |
+  'teal' |
+  'indigo' |
+  'orange';
 
 export const TAILWIND_COLORS: TailwindColor[] = [
   'grey',
@@ -6,6 +12,14 @@ export const TAILWIND_COLORS: TailwindColor[] = [
   'indigo',
   'orange',
 ];
+
+export const COLOR_COOKIE_KEY = 'color';
+
+export const storeColorLocally = (color: TailwindColor) =>
+  setCookie(COLOR_COOKIE_KEY, color);
+
+export const retrieveColorLocally = () =>
+  getCookie(COLOR_COOKIE_KEY) as TailwindColor | undefined;
 
 export const getDarkTextColor = (color: TailwindColor) => {
   switch (color) {
