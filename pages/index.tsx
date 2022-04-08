@@ -32,14 +32,12 @@ const Home: NextPage<Props> = ({ initialItems, initialColor }) => {
   // Or use both at the page level AND the app level?
 
   const [apiResultName, setApiResultName] = useState<string>();
-  const [apiResultColor, setApiResultColor] = useState<string>();
 
   useEffect(() => {
     fetch('/api/hello')
       .then(response => response.json())
       .then(json => {
         setApiResultName(json.name);
-        setApiResultColor(json.colors[0]?.value ?? '#00ff00');
       });
   }, []);
 
@@ -107,7 +105,7 @@ const Home: NextPage<Props> = ({ initialItems, initialColor }) => {
           'mb-8',
           getDarkTextColor(color),
         ])}>
-          API Result: {apiResultName} <span style={{color: apiResultColor}}>{apiResultColor}</span>
+          API Result: {apiResultName}
         </h2>}
         
         {items.length === 0 &&
