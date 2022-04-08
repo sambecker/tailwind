@@ -107,7 +107,7 @@ const Home: NextPage<Props> = ({ initialItems, initialColor }) => {
           'mb-8',
           getDarkTextColor(color),
         ])}>
-          API Result: {apiResultName} <span style={{color: apiResultColor.value}}>{apiResultColor.value}</span>
+          API Result: {apiResultName} <span style={{color: apiResultColor?.value}}>{apiResultColor?.value ?? 'No color'}</span>
         </h2>}
         
         {items.length === 0 &&
