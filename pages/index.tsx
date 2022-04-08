@@ -39,7 +39,7 @@ const Home: NextPage<Props> = ({ initialItems, initialColor }) => {
       .then(response => response.json())
       .then(json => {
         setApiResultName(json.name);
-        setApiResultColor(json.colors[0]);
+        setApiResultColor(json.colors[0]?.value ?? '#00ff00');
       });
   }, []);
 
@@ -107,7 +107,7 @@ const Home: NextPage<Props> = ({ initialItems, initialColor }) => {
           'mb-8',
           getDarkTextColor(color),
         ])}>
-          API Result: {apiResultName} <span style={{color: apiResultColor?.value}}>{apiResultColor?.value ?? 'No color'}</span>
+          API Result: {apiResultName} <span style={{color: apiResultColor}}>{apiResultColor}</span>
         </h2>}
         
         {items.length === 0 &&
