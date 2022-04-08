@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
 import { joinClasses } from '../utility/css';
 import Button from './Button';
 import { TailwindColor } from '../theme';
@@ -8,6 +8,7 @@ interface Props {
   cta: string
   onCtaClick: () => void
   color?: TailwindColor
+  children?: ReactNode
 }
 
 const Box: FC<Props> = ({

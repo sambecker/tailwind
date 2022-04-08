@@ -2,6 +2,9 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
+Connect to PlanetScale locally
+`pscale connect tailwind initial-setup --port 3309`
+
 First, run the development server:
 
 ```bash

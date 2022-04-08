@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
 import { TailwindColor } from '../theme';
 import { joinClasses } from '../utility/css';
 
@@ -8,6 +8,7 @@ interface Props {
   color?: TailwindColor
   dark?: boolean
   large?: boolean
+  children?: ReactNode
 }
 
 const ComponentName: FC<Props>= ({

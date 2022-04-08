@@ -31,12 +31,16 @@ const Home: NextPage<Props> = ({ initialItems, initialColor }) => {
   // Move back to App.tsx?
   // Or use both at the page level AND the app level?
 
-  const [apiResult, setApiResult] = useState<string>();
+  const [apiResultName, setApiResultName] = useState<string>();
+  const [apiResultColor, setApiResultColor] = useState<string>();
 
   useEffect(() => {
     fetch('/api/hello')
       .then(response => response.json())
-      .then(json => setApiResult(json.name));
+      .then(json => {
+        setApiResultName(json.name);
+        setApiResultColor(json.colors[0]);
+      });
   }, []);
 
   const [hasLoadedOnce, setHasLoadedOnce] = useState(false);
@@ -97,13 +101,13 @@ const Home: NextPage<Props> = ({ initialItems, initialColor }) => {
           {TITLE}
         </h1>
 
-        {apiResult && <h2 className={joinClasses([
+        {apiResultName && <h2 className={joinClasses([
           'font-mono',
           'font-bold',
           'mb-8',
           getDarkTextColor(color),
         ])}>
-          API Result: {apiResult}
+          API Result: {apiResultName} <span style={{color: apiResultColor.value}}>{apiResultColor.value}</span>
         </h2>}
         
         {items.length === 0 &&
@@ -122,6 +126,7 @@ const Home: NextPage<Props> = ({ initialItems, initialColor }) => {
           'grid-cols-1 md:grid-cols-3 xl:grid-cols-4',
           'gap-6 md:gap-4',
         ])}>
+          {/* eslint-disable-next-line */}
           <AnimatePresence>
             {items.map(({ title, text }) =>
               <motion.div
