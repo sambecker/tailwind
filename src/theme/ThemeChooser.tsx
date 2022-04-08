@@ -17,8 +17,9 @@ const ThemeChooser: FC = () => {
           key={color}
           className={joinClasses([
             'capitalize',
-            'active:font-bold',
-            color === selectedColor && 'font-bold',
+            'active:opacity-50',
+            'select-none',
+            color === selectedColor && 'font-bold border-b-2 border-black',
           ])}
           onClick={() => {
             dispatch(themeActions.setColor(color));

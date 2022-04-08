@@ -15,6 +15,7 @@ import {
 import { useDispatch } from 'react-redux';
 import { themeActions } from '../src/theme/state';
 import { useAppState } from '../src/state';
+import useElementClasses from '../src/utility/useBodyClasses';
 
 const TITLE = 'Responsive Tailwind demo';
 
@@ -25,6 +26,18 @@ interface Props {
 
 const Home: NextPage<Props> = ({ initialItems, initialColor }) => {
   const [items, setItems] = useState(initialItems);
+
+  // Wrap all following theme code into hook
+  // Move back to App.tsx?
+  // Or use both at the page level AND the app level?
+
+  const [apiResult, setApiResult] = useState<string>();
+
+  useEffect(() => {
+    fetch('/api/hello')
+      .then(response => response.json())
+      .then(json => setApiResult(json.name));
+  }, []);
 
   const [hasLoadedOnce, setHasLoadedOnce] = useState(false);
 
@@ -45,6 +58,27 @@ const Home: NextPage<Props> = ({ initialItems, initialColor }) => {
     ? initialColor
     : selectedColor;
 
+  const backgroundForColor = () => {
+    switch (color) {
+    case 'grey':
+      return 'bg-slate-50';
+    case 'teal':
+      return 'bg-teal-50';
+    case 'indigo':
+      return 'bg-indigo-50';
+    case 'orange':
+      return 'bg-orange-50';
+    }
+  };
+
+  useElementClasses(
+    joinClasses([
+      'py-4 px-6 m-auto max-w-8xl',
+      backgroundForColor(),
+    ]),
+    typeof document !== 'undefined' ? document.body : undefined,
+  );
+
   return (
     <>
       <Head>
@@ -53,7 +87,7 @@ const Home: NextPage<Props> = ({ initialItems, initialColor }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="space-y-3 mb-12">
+      <main className="mb-12">
         <h1
           className={joinClasses([
             'text-3xl leading-none md:text-6xl mb-8 md:mb-24 font-bold',
@@ -62,6 +96,15 @@ const Home: NextPage<Props> = ({ initialItems, initialColor }) => {
         >
           {TITLE}
         </h1>
+
+        {apiResult && <h2 className={joinClasses([
+          'font-mono',
+          'font-bold',
+          'mb-8',
+          getDarkTextColor(color),
+        ])}>
+          API Result: {apiResult}
+        </h2>}
         
         {items.length === 0 &&
           <Button
@@ -112,6 +155,7 @@ const Home: NextPage<Props> = ({ initialItems, initialColor }) => {
 export const getServerSideProps: GetServerSideProps<Props> = async ({ req }) => {
   const initialColor =
     req.cookies[COLOR_COOKIE_KEY] as TailwindColor | undefined;
+  console.log(process.env.DB_URL);
   return {
     props: {
       initialItems: generateItems(),
