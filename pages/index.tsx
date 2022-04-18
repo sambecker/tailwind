@@ -17,6 +17,7 @@ import { themeActions } from '../src/theme/state';
 import { useAppState } from '../src/state';
 import useElementClasses from '../src/utility/useBodyClasses';
 import Animation from '../src/components/Animation';
+import Link from 'next/link';
 
 const TITLE = 'Responsive Tailwind demo';
 
@@ -116,6 +117,19 @@ const Home: NextPage<Props> = ({ initialItems, initialColor }) => {
         ])}>
           API Result: {apiResultName}
         </h2>}
+
+        <Link href="test">
+          <a className={joinClasses([
+            'inline-block',
+            'font-mono',
+            'font-bold',
+            'mb-8',
+            'hover:underline',
+            getDarkTextColor(color),
+          ])}>
+            Test Page
+          </a>
+        </Link>
         
         {items.length === 0 &&
           <Button
