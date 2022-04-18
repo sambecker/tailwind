@@ -50,6 +50,7 @@ const Box: FC<Props> = ({
         'flex flex-col items-start',
         'px-4 pt-2 pb-4',
         'text-white rounded-lg shadow-lg',
+        'transition-all',
         classesForBox(),
       ])}
     >

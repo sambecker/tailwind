@@ -1,9 +1,9 @@
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
 // import { useAppState } from '../state';
 // import { joinClasses } from '../utility/css';
 // import useElementClasses from '../utility/useBodyClasses';
 
-const App: FC = ({ children }) => {
+const App: FC<{ children: ReactNode }> = ({ children }) => {
   // const { selectedColor } = useAppState('theme');
 
   // const backgroundForColor = () => {

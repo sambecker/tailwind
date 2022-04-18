@@ -8,6 +8,9 @@ module.exports = {
       maxWidth: {
         '8xl': '100rem',
       },
+      transitionProperty: {
+        'left': 'left',
+      },
     },
   },
   plugins: [

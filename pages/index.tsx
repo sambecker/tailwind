@@ -16,6 +16,7 @@ import { useDispatch } from 'react-redux';
 import { themeActions } from '../src/theme/state';
 import { useAppState } from '../src/state';
 import useElementClasses from '../src/utility/useBodyClasses';
+import Animation from '../src/components/Animation';
 
 const TITLE = 'Responsive Tailwind demo';
 
@@ -30,6 +31,11 @@ const Home: NextPage<Props> = ({ initialItems, initialColor }) => {
   // Wrap all following theme code into hook
   // Move back to App.tsx?
   // Or use both at the page level AND the app level?
+
+  // Move to custom hook `useTheme`
+  // With optional argument -> shouldHydrateLocalState
+  // index.tsx -> useTheme(initialThemeState, true)
+  // test.tsx -> useTheme(initialThemeState)
 
   const [apiResultName, setApiResultName] = useState<string>();
 
@@ -73,6 +79,7 @@ const Home: NextPage<Props> = ({ initialItems, initialColor }) => {
     }
   };
 
+  // Hoist to `PageComponent`
   useElementClasses(
     joinClasses([
       'py-4 px-6 m-auto max-w-8xl',
@@ -98,6 +105,8 @@ const Home: NextPage<Props> = ({ initialItems, initialColor }) => {
         >
           {TITLE}
         </h1>
+
+        <Animation />
 
         {apiResultName && <h2 className={joinClasses([
           'font-mono',
