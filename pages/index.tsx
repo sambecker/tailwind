@@ -7,17 +7,10 @@ import Button from '../src/components/Button';
 import Box from '../src/components/Box';
 import { generateItems, Items } from '../src/app';
 import ThemeChooser from '../src/theme/ThemeChooser';
-import {
-  COLOR_COOKIE_KEY,
-  getDarkTextColor,
-  TailwindColor,
-} from '../src/theme';
-import { useDispatch } from 'react-redux';
-import { themeActions } from '../src/theme/state';
-import { useAppState } from '../src/state';
-import useElementClasses from '../src/utility/useBodyClasses';
+import { getDarkTextColor, TailwindColor } from '../src/theme';
 import Animation from '../src/components/Animation';
 import Link from 'next/link';
+import useTheme from '../src/theme/useTheme';
 
 const TITLE = 'Responsive Tailwind demo';
 
@@ -29,15 +22,6 @@ interface Props {
 const Home: NextPage<Props> = ({ initialItems, initialColor }) => {
   const [items, setItems] = useState(initialItems);
 
-  // Wrap all following theme code into hook
-  // Move back to App.tsx?
-  // Or use both at the page level AND the app level?
-
-  // Move to custom hook `useTheme`
-  // With optional argument -> shouldHydrateLocalState
-  // index.tsx -> useTheme(initialThemeState, true)
-  // test.tsx -> useTheme(initialThemeState)
-
   const [apiResultName, setApiResultName] = useState<string>();
 
   useEffect(() => {
@@ -48,46 +32,7 @@ const Home: NextPage<Props> = ({ initialItems, initialColor }) => {
       });
   }, []);
 
-  const [hasLoadedOnce, setHasLoadedOnce] = useState(false);
-
-  const dispatch = useDispatch();
-
-  const { selectedColor } = useAppState('theme');
-
-  useEffect(() => {
-    if (!hasLoadedOnce) {
-      setHasLoadedOnce(true);
-      if (initialColor) {
-        dispatch(themeActions.setColor(initialColor));
-      }
-    }
-  }, [hasLoadedOnce, initialColor, dispatch]);
-  
-  const color = !hasLoadedOnce && initialColor
-    ? initialColor
-    : selectedColor;
-
-  const backgroundForColor = () => {
-    switch (color) {
-    case 'grey':
-      return 'bg-slate-50';
-    case 'teal':
-      return 'bg-teal-50';
-    case 'indigo':
-      return 'bg-indigo-50';
-    case 'orange':
-      return 'bg-orange-50';
-    }
-  };
-
-  // Hoist to `PageComponent`
-  useElementClasses(
-    joinClasses([
-      'py-4 px-6 m-auto max-w-8xl',
-      backgroundForColor(),
-    ]),
-    typeof document !== 'undefined' ? document.body : undefined,
-  );
+  const { selectedColor } = useTheme(initialColor);
 
   return (
     <>
@@ -101,31 +46,31 @@ const Home: NextPage<Props> = ({ initialItems, initialColor }) => {
         <h1
           className={joinClasses([
             'text-3xl leading-none md:text-6xl mb-8 md:mb-24 font-bold',
-            getDarkTextColor(color),
+            getDarkTextColor(selectedColor),
           ])}
         >
           {TITLE}
         </h1>
 
-        <Animation />
+        <Animation initialColor={initialColor} />
 
         {apiResultName && <h2 className={joinClasses([
           'font-mono',
           'font-bold',
           'mb-8',
-          getDarkTextColor(color),
+          getDarkTextColor(selectedColor),
         ])}>
           API Result: {apiResultName}
         </h2>}
 
-        <Link href="test">
+        <Link href="/test">
           <a className={joinClasses([
             'inline-block',
             'font-mono',
             'font-bold',
             'mb-8',
             'hover:underline',
-            getDarkTextColor(color),
+            getDarkTextColor(selectedColor),
           ])}>
             Test Page
           </a>
@@ -135,7 +80,7 @@ const Home: NextPage<Props> = ({ initialItems, initialColor }) => {
           <Button
             onClick={() => setItems(generateItems())}
             className="relative -top-3"
-            color={color}
+            color={selectedColor}
             dark
             large
           >
@@ -162,7 +107,7 @@ const Home: NextPage<Props> = ({ initialItems, initialColor }) => {
                   cta="Close"
                   onCtaClick={() =>
                     setItems(items.filter(i => i.title !== title))}
-                  color={color}
+                  color={selectedColor}
                 >
                   {text}
                 </Box>
@@ -178,14 +123,10 @@ const Home: NextPage<Props> = ({ initialItems, initialColor }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps<Props> = async ({ req }) => {
-  const initialColor =
-    req.cookies[COLOR_COOKIE_KEY] as TailwindColor | undefined;
-  console.log(process.env.DB_URL);
+export const getServerSideProps: GetServerSideProps<Props> = async () => {
   return {
     props: {
       initialItems: generateItems(),
-      ...initialColor !== undefined && { initialColor },
     },
   };
 };

@@ -1,14 +1,17 @@
 import { FC } from 'react';
-import { useAppState } from '../state';
 import { joinClasses } from '../utility/css';
+import useTheme from '../theme/useTheme';
+import { TailwindColor } from '../theme';
 
-interface Props {}
+interface Props {
+  initialColor?: TailwindColor
+}
 
 const WIDTH   = 'w-32';
 const HEIGHT  = 'h-32';
 
-const Animation: FC<Props> = () => {
-  const { selectedColor } = useAppState('theme');
+const Animation: FC<Props> = ({ initialColor }) => {
+  const { selectedColor } = useTheme(initialColor);
 
   const backgroundColor = () => {
     switch (selectedColor) {

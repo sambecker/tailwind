@@ -1,3 +1,4 @@
+import { AppContext } from 'next/app';
 import { getCookie, setCookie } from 'typescript-cookie';
 
 export type TailwindColor =
@@ -14,6 +15,10 @@ export const TAILWIND_COLORS: TailwindColor[] = [
 ];
 
 export const COLOR_COOKIE_KEY = 'color';
+
+export const getColorFromContextCookie = (appContext: AppContext) =>
+  (appContext.ctx.req as any)?.
+    cookies[COLOR_COOKIE_KEY] as TailwindColor | undefined;
 
 export const storeColorLocally = (color: TailwindColor) =>
   setCookie(COLOR_COOKIE_KEY, color);
