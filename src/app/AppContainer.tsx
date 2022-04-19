@@ -1,5 +1,6 @@
 import { FC, ReactNode } from 'react';
 import { TailwindColor } from '../theme';
+import ThemeChooser from '../theme/ThemeChooser';
 import useTheme from '../theme/useTheme';
 import { joinClasses } from '../utility/css';
 import useElementClasses from '../utility/useBodyClasses';
@@ -36,6 +37,9 @@ const AppContainer: FC<Props> = ({ initialColor, children }) => {
 
   return <>
     {children}
+    <footer className="my-6">
+      <ThemeChooser initialColor={initialColor} />
+    </footer>
   </>;
 };
 

@@ -6,7 +6,6 @@ import { joinClasses } from '../src/utility/css';
 import Button from '../src/components/Button';
 import Box from '../src/components/Box';
 import { generateItems, Items } from '../src/app';
-import ThemeChooser from '../src/theme/ThemeChooser';
 import { getDarkTextColor, TailwindColor } from '../src/theme';
 import Animation from '../src/components/Animation';
 import Link from 'next/link';
@@ -53,15 +52,6 @@ const Home: NextPage<Props> = ({ initialItems, initialColor }) => {
         </h1>
 
         <Animation initialColor={initialColor} />
-
-        {apiResultName && <h2 className={joinClasses([
-          'font-mono',
-          'font-bold',
-          'mb-8',
-          getDarkTextColor(selectedColor),
-        ])}>
-          API Result: {apiResultName}
-        </h2>}
 
         <Link href="/test">
           <a className={joinClasses([
@@ -114,11 +104,16 @@ const Home: NextPage<Props> = ({ initialItems, initialColor }) => {
               </motion.div>)}
           </AnimatePresence>
         </div>
-      </main>
 
-      <footer className="mb-6">
-        <ThemeChooser />
-      </footer>
+        {apiResultName && <h2 className={joinClasses([
+          'font-mono',
+          'font-bold',
+          'mt-8',
+          getDarkTextColor(selectedColor),
+        ])}>
+          API Result: {apiResultName}
+        </h2>}
+      </main>
     </>
   );
 };

@@ -1,12 +1,16 @@
 import { FC } from 'react';
 import { useDispatch } from 'react-redux';
-import { storeColorLocally, TAILWIND_COLORS } from '.';
-import { useAppState } from '../state';
+import { storeColorLocally, TailwindColor, TAILWIND_COLORS } from '.';
 import { joinClasses } from '../utility/css';
 import { themeActions } from './state';
+import useTheme from './useTheme';
 
-const ThemeChooser: FC = () => {
-  const { selectedColor } = useAppState('theme');
+interface Props {
+  initialColor?: TailwindColor
+}
+
+const ThemeChooser: FC<Props> = ({ initialColor }) => {
+  const { selectedColor } = useTheme(initialColor);
 
   const dispatch = useDispatch();
 
