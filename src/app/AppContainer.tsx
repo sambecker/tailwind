@@ -3,7 +3,7 @@ import { TailwindColor } from '../theme';
 import ThemeChooser from '../theme/ThemeChooser';
 import useTheme from '../theme/useTheme';
 import { joinClasses } from '../utility/css';
-import useElementClasses from '../utility/useBodyClasses';
+import useElementClasses from '../utility/useElementClasses';
 
 interface Props {
   initialColor?: TailwindColor
