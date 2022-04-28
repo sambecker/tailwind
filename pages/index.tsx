@@ -33,6 +33,20 @@ const Home: NextPage<Props> = ({ initialItems, initialColor }) => {
 
   const { selectedColor } = useTheme(initialColor);
 
+  const renderLink = (href: string, label: string) =>
+    <Link {...{ href }}>
+      <a className={joinClasses([
+        'inline-block',
+        'font-mono',
+        'font-bold',
+        'mb-8',
+        'hover:underline',
+        getDarkTextColor(selectedColor),
+      ])}>
+        {label}
+      </a>
+    </Link>;
+
   return (
     <>
       <Head>
@@ -53,18 +67,9 @@ const Home: NextPage<Props> = ({ initialItems, initialColor }) => {
 
         <Animation initialColor={initialColor} />
 
-        <Link href="/test">
-          <a className={joinClasses([
-            'inline-block',
-            'font-mono',
-            'font-bold',
-            'mb-8',
-            'hover:underline',
-            getDarkTextColor(selectedColor),
-          ])}>
-            Test Page
-          </a>
-        </Link>
+        {renderLink('/test', 'Test Page')}
+        <br />
+        {renderLink('/erroneous', 'Erroneous Page')}
         
         {items.length === 0 &&
           <Button
