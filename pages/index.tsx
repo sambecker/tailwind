@@ -67,8 +67,7 @@ const Home: NextPage<Props> = ({ initialItems, initialColor }) => {
 
         <Animation initialColor={initialColor} />
 
-        {renderLink('/test', 'Test Page')}
-        <br />
+        {renderLink('/test', 'Test Page')}<br />
         {renderLink('/erroneous', 'Erroneous Page')}
         
         {items.length === 0 &&
