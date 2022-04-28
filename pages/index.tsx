@@ -11,7 +11,7 @@ import Animation from '../src/components/Animation';
 import Link from 'next/link';
 import useTheme from '../src/theme/useTheme';
 
-const TITLE = 'Responsive Tailwind demo';
+const TITLE = 'Build Test';
 
 interface Props {
   initialItems: Items
