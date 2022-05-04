@@ -16,7 +16,7 @@ const TestPage: NextPage<Props> = () => {
         'rounded-xl',
         'border border-slate-300',
       ])}>
-        Test Page For Checkly [Updated]
+        Test Page For Checkly
       </div>
       <Link href="/">
         <a className={joinClasses([
