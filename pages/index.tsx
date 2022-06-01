@@ -11,8 +11,9 @@ import Animation from '../src/components/Animation';
 import Link from 'next/link';
 import useTheme from '../src/theme/useTheme';
 import useSWR from 'swr';
+import { fetchJson } from '../src/utility/fetch';
 
-const TITLE = 'Responsive Tailwind demo UPDATE';
+const TITLE = 'Responsive Tailwind demo';
 
 interface Props {
   initialItems: Items
@@ -24,8 +25,7 @@ const Home: NextPage<Props> = ({ initialItems, initialColor }) => {
 
   const [apiResultName, setApiResultName] = useState<string>();
 
-  const { data, error } = useSWR<{ name: string }>('/api/hello', url =>
-    fetch(url).then(response => response.json()));
+  const { data, error } = useSWR<{ name: string }>('/api/hello', fetchJson);
 
   if (!apiResultName && data && !error) {
     setApiResultName(data.name);

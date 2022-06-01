@@ -54,7 +54,7 @@ const Animation: FC<Props> = ({ initialColor }) => {
         hoverForColor(),
         `${WIDTH} ${HEIGHT}`,
         'rounded-2xl',
-        'left-0 group-hover:left-[10rem]',
+        'left-0 group-hover:translate-x-[10rem]',
         'transition-all duration-500',
         'select-none',
       ])}>
