@@ -1,5 +1,5 @@
 import type { GetServerSideProps, NextPage } from 'next';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Head from 'next/head';
 import { AnimatePresence, motion } from 'framer-motion';
 import { joinClasses } from '../src/utility/css';
@@ -10,6 +10,7 @@ import { getDarkTextColor, TailwindColor } from '../src/theme';
 import Animation from '../src/components/Animation';
 import Link from 'next/link';
 import useTheme from '../src/theme/useTheme';
+import useSWR from 'swr';
 
 const TITLE = 'Responsive Tailwind demo UPDATE';
 
@@ -23,13 +24,14 @@ const Home: NextPage<Props> = ({ initialItems, initialColor }) => {
 
   const [apiResultName, setApiResultName] = useState<string>();
 
-  useEffect(() => {
-    fetch('/api/hello')
-      .then(response => response.json())
-      .then(json => {
-        setApiResultName(json.name);
-      });
-  }, []);
+  const { data, error } = useSWR<{ name: string }>('/api/hello', url =>
+    fetch(url).then(response => response.json()));
+
+  console.log(data);
+
+  if (!apiResultName && data && !error) {
+    setApiResultName(data.name);
+  }
 
   const { selectedColor } = useTheme(initialColor);
 
