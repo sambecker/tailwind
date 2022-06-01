@@ -27,8 +27,6 @@ const Home: NextPage<Props> = ({ initialItems, initialColor }) => {
   const { data, error } = useSWR<{ name: string }>('/api/hello', url =>
     fetch(url).then(response => response.json()));
 
-  console.log(data);
-
   if (!apiResultName && data && !error) {
     setApiResultName(data.name);
   }
